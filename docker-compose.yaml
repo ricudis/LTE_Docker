@@ -1,0 +1,373 @@
+version: '3'
+
+services:
+  build_base:
+    build: ./dockers/base
+    image: lte_base
+    container_name: lte_base
+    
+  build_base_srslte:
+    build: ./dockers/base_srslte
+    image: lte_base_srslte
+    container_name: lte_base_srslte
+    
+  build_base_open5gs:
+    build: ./dockers/base_open5gs
+    image: lte_base_open5gs
+    container_name: lte_base_open5gs
+  
+  build_base_kamailio:
+    build: ./dockers/base_kamailio
+    image: lte_base_kamailio
+    container_name: lte_base_kamailio
+    
+  build_base_rtpengine:
+    build: ./dockers/base_rtpengine
+    image: lte_base_rtpengine
+    container_name: lte_base_rtpengine
+    
+  build_base_fhoss:
+    build: ./dockers/base_fhoss
+    image: lte_base_fhoss
+    container_name: lte_base_fhoss
+    
+  lte_dns:
+    build: ./dockers/dns
+    image: lte_dns
+    container_name: lte_dns
+    env_file:
+      - .env
+    volumes:
+      - ./log/dns:/opt/LTE/log/dns
+      - ./config/dns:/opt/LTE/config/dns
+      - ./scripts/dns:/opt/LTE/scripts/dns
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_DNS_IP}
+    
+  lte_mongo:
+    build: ./dockers/mongo
+    image: lte_mongo
+    container_name: lte_mongo
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+    env_file:
+      - .env
+    volumes:
+      - ./log/mongo:/opt/LTE/log/mongo
+      - ./config/mongo:/opt/LTE/config/mongo
+      - ./scripts/mongo:/opt/LTE/scripts/mongo
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_MONGO_IP}
+
+  lte_mysql:
+    build: ./dockers/mysql
+    image: lte_mysql
+    container_name: lte_mysql
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+    env_file:
+      - .env
+    volumes:
+      - ./log/mysql:/opt/LTE/log/mysql
+      - ./config/mysql:/opt/LTE/config/mysql
+      - ./scripts/mysql:/opt/LTE/scripts/mysql
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_MYSQL_IP}
+    
+  lte_mme:
+    build: ./dockers/mme
+    image: lte_mme
+    container_name: lte_mme
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_pgw
+      - lte_sgw
+      - lte_hss_epc
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/mme:/opt/LTE/log/mme
+      - ./config/mme:/opt/LTE/config/mme
+      - ./scripts/mme:/opt/LTE/scripts/mme
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_MME_IP}
+        
+  lte_hss_epc:
+    build: ./dockers/hss_epc
+    image: lte_hss_epc
+    container_name: lte_hss_epc
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mongo
+    env_file:
+      - .env
+    volumes:
+      - ./log/hss_epc:/opt/LTE/log/hss_epc
+      - ./config/hss_epc:/opt/LTE/config/hss_epc
+      - ./scripts/hss_epc:/opt/LTE/scripts/hss_epc
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_HSS_EPC_IP}
+        
+  lte_hss_epc_web:
+    build: ./dockers/hss_epc_web
+    image: lte_hss_epc_web
+    container_name: lte_hss_epc_web
+    dns: ${LTE_DNS_IP}
+    expose:
+      - "3000/tcp"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - lte_dns
+      - lte_mongo
+    env_file:
+      - .env
+    volumes:
+      - ./log/hss_epc_web:/opt/LTE/log/hss_epc_web
+      - ./config/hss_epc_web:/opt/LTE/config/hss_epc_web
+      - ./scripts/hss_epc_web:/opt/LTE/scripts/hss_epc_web
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+       core:
+         ipv4_address: ${LTE_HSS_EPC_WEB_IP}
+        
+  lte_sgw:
+    build: ./dockers/sgw
+    image: lte_sgw
+    container_name: lte_sgw
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+    cap_add:
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/sgw:/opt/LTE/log/sgw
+      - ./config/sgw:/opt/LTE/config/sgw
+      - ./scripts/sgw:/opt/LTE/scripts/sgw
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_SGW_IP}
+        
+  lte_pgw:
+    build: ./dockers/pgw
+    image: lte_pgw
+    container_name: lte_pgw
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_sgw
+      - lte_pcrf
+    cap_add:
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    sysctls:
+      - net.ipv4.ip_forward=1
+    env_file:
+      - .env
+    volumes:
+      - ./log/pgw:/opt/LTE/log/pgw
+      - ./config/pgw:/opt/LTE/config/pgw
+      - ./scripts/pgw:/opt/LTE/scripts/pgw
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_PGW_IP}
+
+  lte_pcrf:
+    build: ./dockers/pcrf
+    image: lte_pcrf
+    container_name: lte_pcrf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mongo
+    env_file:
+      - .env
+    volumes:
+      - ./log/pcrf:/opt/LTE/log/pcrf
+      - ./config/pcrf:/opt/LTE/config/pcrf
+      - ./scripts/pcrf:/opt/LTE/scripts/pcrf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_PCRF_IP}
+        
+  lte_icscf:
+    build: ./dockers/icscf
+    image: lte_icscf
+    container_name: lte_icscf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mysql
+      - lte_hss_ims
+    env_file:
+      - .env
+    volumes:
+      - ./log/icscf:/opt/LTE/log/icscf
+      - ./config/icscf:/opt/LTE/config/icscf
+      - ./scripts/icscf:/opt/LTE/scripts/icscf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_ICSCF_IP}
+        
+  lte_pcscf:
+    build: ./dockers/pcscf
+    image: lte_pcscf
+    container_name: lte_pcscf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mysql
+      - lte_hss_ims
+      - lte_pcrf
+    env_file:
+      - .env
+    volumes:
+      - ./log/pcscf:/opt/LTE/log/pcscf
+      - ./config/pcscf:/opt/LTE/config/pcscf
+      - ./scripts/pcscf:/opt/LTE/scripts/pcscf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_PCSCF_IP}
+        
+  lte_scscf:
+    build: ./dockers/scscf
+    image: lte_scscf
+    container_name: lte_scscf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mysql
+      - lte_hss_ims
+    env_file:
+      - .env
+    volumes:
+      - ./log/scscf:/opt/LTE/log/scscf
+      - ./config/scscf:/opt/LTE/config/scscf
+      - ./scripts/scscf:/opt/LTE/scripts/scscf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_SCSCF_IP}
+        
+  lte_hss_ims:
+    build: ./dockers/hss_ims
+    image: lte_hss_ims
+    container_name: lte_hss_ims
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mysql
+    env_file:
+      - .env
+    volumes:
+      - ./log/hss_ims:/opt/LTE/log/hss_ims
+      - ./config/hss_ims:/opt/LTE/config/hss_ims
+      - ./scripts/hss_ims:/opt/LTE/scripts/hss_ims
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_HSS_IMS_IP}
+        
+  lte_rtpengine:
+    build: ./dockers/rtpengine
+    image: lte_rtpengine
+    container_name: lte_rtpengine
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mysql
+    env_file:
+      - .env
+    volumes:
+      - ./log/rtpengine:/opt/LTE/log/rtpengine
+      - ./config/rtpengine:/opt/LTE/config/rtpengine
+      - ./scripts/rtpengine:/opt/LTE/scripts/rtpengine
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_RTPENGINE_IP}
+
+  lte_enb_zmq:
+    build: ./dockers/enb_zmq
+    image: lte_enb_zmq
+    container_name: lte_enb_zmq
+    depends_on:
+      - lte_mme
+    env_file:
+      - .env
+    volumes:
+      - ./log/enb_zmq:/opt/LTE/log/enb_zmq
+      - ./config/enb_zmq:/opt/LTE/config/enb_zmq
+      - ./scripts/enb_zmq:/opt/LTE/scripts/enb_zmq
+      - ./scripts/common:/opt/LTE/scripts/common
+      - /tmp/lte_ipc_sock:/opt/LTE/sock
+    networks:
+      core:
+        ipv4_address: ${LTE_ENB_ZMQ_IP}
+      radio_zmq:
+        ipv4_address: ${LTE_RZMQ_ENB_IP}
+                
+  lte_ue_zmq:
+    build: ./dockers/ue_zmq
+    image: lte_ue_zmq
+    container_name: lte_ue_zmq
+    depends_on:
+      - lte_enb_zmq
+    cap_add:
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/ue_zmq:/opt/LTE/log/ue_zmq
+      - ./config/ue_zmq:/opt/LTE/config/ue_zmq
+      - ./scripts/ue_zmq:/opt/LTE/scripts/ue_zmq
+      - ./scripts/common:/opt/LTE/scripts/common
+      - /tmp/lte_ipc_sock:/opt/LTE/sock
+    networks:
+      radio_zmq:
+        ipv4_address: ${LTE_RZMQ_UE_IP}
+
+
+networks:
+  radio_zmq:
+    ipam:
+      config:
+       - subnet: ${LTE_RZMQ_SUBNET}
+       
+  core:
+    ipam:
+      config:
+        - subnet: ${LTE_SUBNET}
+
+

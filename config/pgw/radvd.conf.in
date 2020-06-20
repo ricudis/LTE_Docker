@@ -1,0 +1,31 @@
+interface ogstun_internet
+{
+	AdvSendAdvert on;
+	IgnoreIfMissing on;
+	MinRtrAdvInterval 30;
+	MaxRtrAdvInterval 60;
+	AdvDefaultPreference low;
+	AdvHomeAgentFlag off;
+	prefix LTE_UE_SUBNET_IP6
+	{
+		AdvOnLink on;
+		AdvAutonomous on;
+		AdvRouterAddr off;
+	};
+};
+
+interface ogstun_ims
+{
+	AdvSendAdvert on;
+	IgnoreIfMissing on;
+	MinRtrAdvInterval 30;
+	MaxRtrAdvInterval 60;
+	AdvDefaultPreference low;
+	AdvHomeAgentFlag off;
+	prefix LTE_UE_SUBNET_IMS_IP6
+	{
+		AdvOnLink on;
+		AdvAutonomous on;
+		AdvRouterAddr off;
+	};
+};
