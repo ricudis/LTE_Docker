@@ -7,3 +7,5 @@ echo "nameserver $LTE_DNS_IP" > /etc/resolv.conf
 cd /opt/OpenIMSCore/FHoSS/deploy/
 sh /opt/LTE/scripts/common/waitfor_mysql.sh
 sh startup.sh
+
+

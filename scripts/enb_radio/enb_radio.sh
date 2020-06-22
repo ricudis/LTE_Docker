@@ -13,3 +13,4 @@ echo "nameserver $LTE_DNS_IP" > /etc/resolv.conf
 export LD_LIBRARY_PATH=/opt/LTE/srslte/lib/:$LD_LIBRARY_PATH
 
 ${LTE_BASE_DIR}/srslte/bin/srsenb /etc/srslte/enb.conf
+

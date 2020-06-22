@@ -5,3 +5,4 @@ sed -i "s|server.listen(3000, err|server.listen(3000, \'0.0.0.0\', err|g" server
 grep server.listen server/index.js
 sh /opt/LTE/scripts/common/waitfor_mongo.sh
 npm run dev
+

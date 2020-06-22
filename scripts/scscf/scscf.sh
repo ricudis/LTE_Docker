@@ -16,3 +16,4 @@ sh /opt/LTE/scripts/common/waitfor_mysql.sh
 ${LTE_BASE_DIR}/kamailio/sbin/kamailio -dd
 
 sh /opt/LTE/scripts/common/waitfor_ever.sh
+

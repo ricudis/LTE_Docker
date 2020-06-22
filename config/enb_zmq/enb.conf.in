@@ -23,7 +23,7 @@ mnc = LTE_MNC
 mme_addr = LTE_MME_IP
 gtp_bind_addr = LTE_ENB_ZMQ_IP
 s1c_bind_addr = LTE_ENB_ZMQ_IP
-n_prb = 50
+n_prb = 15
 #tm = 4
 #nof_ports = 2
 

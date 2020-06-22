@@ -16,7 +16,7 @@ route del -net default
 ip tuntap del name tun_srsue mode tun >/dev/null 2>&1
 ip tuntap add name tun_srsue mode tun
 
-ip route
+ip route show
 
 ${LTE_BASE_DIR}/srslte/bin/srsue /etc/srslte/ue.conf
 

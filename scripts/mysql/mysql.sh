@@ -48,3 +48,4 @@ echo Adjusting permissions...
 mysql < ${LTE_BASE_DIR}/config/mysql/databases//permissions.sql
 
 sh /opt/LTE/scripts/common/waitfor_ever.sh
+

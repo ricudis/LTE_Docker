@@ -6,3 +6,4 @@ while true ; do
         echo "Waiting for MySQL..."
         sleep 1
 done
+

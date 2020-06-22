@@ -4,3 +4,4 @@ ${LTE_BASE_DIR}/scripts/common/subst.sh ${LTE_BASE_DIR}/config/pcrf/pcrf.yaml.in
 echo "nameserver $LTE_DNS_IP" > /etc/resolv.conf
 sh /opt/LTE/scripts/common/waitfor_mongo.sh
 /opt/LTE/open5gs/bin/open5gs-pcrfd -c ${OPEN5GS_PCRF_CONFIG} 
+
