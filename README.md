@@ -62,19 +62,42 @@ lte_ue_zmq docker instance. Try:
 NOTE : The raspberry PI version is build from a separate tree of srsLTE, not
 yet merged to mainline. Apparently the changes required for performance
 cause the ZMQ versions of UE/ENB to have quite long delays on initial
-startup (about 10 minutes). Be patient and they WILL eventually attach.
-
-
+startup (about 10 minutes). Be patient and they will eventually attach.
 
 You can capture pcaps of any network element either by attaching to the
-specific docker containeer ("docker-compose run lte_xxx /bin/bash") and
+specific docker containeer ("docker-compose exec lte_xxx /bin/bash") and
 running tcpdump, or (better) by running tcpdump on the appropriate network
 interface docker generates on the host.
 
 
 How to run the RADIO version: 
 
--- TODO --
+
+Compile latest LimeUtil (you can also use the lte_base_srslte or any image
+derived from it, like lte_ue_* / lte_enb_* running in priviledge mode so it
+can access USB).
+
+Connect LimeSDR Mini to Raspberry PI, *on a USB3 port* (the blue ones).
+
+Run
+
+```LimeUtil  --update```
+
+to upgrade the LimeSDR firmware to latest version 
+
+Edit .env and set : 
+
+1) MCC/MNC for your SIM card (oh yes you need a programmable SIM card too, I use sysmocom) 
+2) EARFCN_DL value that works with your mobile and won't send the police right up to your door
+(location and UE specific. Google for EARFCN values. better to make some experiments and lower 
+TX gain on srsenb to the lowest value that works in your environment so you don't cause 
+interference too far away from the testbed)
+
+subscriber data for your SIM are placed in mongo epc database (edit
+config/mongo/subscribers.json, you can also use the lte_epc_web container to
+create a new subscriber). 
+
+sh lte_radio.sh
 
 How to run IMS: 
 
