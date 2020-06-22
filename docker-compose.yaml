@@ -338,6 +338,31 @@ services:
         ipv4_address: ${LTE_ENB_ZMQ_IP}
       radio_zmq:
         ipv4_address: ${LTE_RZMQ_ENB_IP}
+        
+  lte_enb_radio:
+    privileged: true
+    build: ./dockers/enb_zmq
+    image: lte_enb_zmq
+    container_name: lte_enb_zmq
+    cap_add:
+      - SYS_RESOURCE
+      - SYS_NICE
+      - IPC_LOCK
+    depends_on:
+      - lte_mme
+    env_file:
+      - .env
+    volumes:
+      - ./log/enb_zmq:/opt/LTE/log/enb_zmq
+      - ./config/enb_zmq:/opt/LTE/config/enb_zmq
+      - ./scripts/enb_zmq:/opt/LTE/scripts/enb_zmq
+      - ./scripts/common:/opt/LTE/scripts/common
+      - /tmp/lte_ipc_sock:/opt/LTE/sock
+    networks:
+      core:
+        ipv4_address: ${LTE_ENB_ZMQ_IP}
+      radio_zmq:
+        ipv4_address: ${LTE_RZMQ_ENB_IP}
                 
   lte_ue_zmq:
     build: ./dockers/ue_zmq
