@@ -59,6 +59,11 @@ lte_ue_zmq docker instance. Try:
 ```ping 10.45.0.1``` (the PGW gateway IP) 
 ```ping 8.8.8.8``` (an outside IP, to test if NAT works right) 
 
+NOTE : The raspberry PI version is build from a separate tree of srsLTE, not
+yet merged to mainline. Apparently the changes required for performance
+cause the ZMQ versions of UE/ENB to have quite long delays on initial
+startup (about 10 minutes). Be patient and they WILL eventually attach.
+
 
 
 You can capture pcaps of any network element either by attaching to the
