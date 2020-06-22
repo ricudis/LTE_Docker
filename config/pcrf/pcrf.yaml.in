@@ -25,25 +25,25 @@ logger:
 pcrf:
 #   freeDiameter: /opt/LTE//open5gs/etc/freeDiameter/pcrf.conf
     freeDiameter:
-      identity: pcrf.epc.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
-      realm: epc.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
+      identity: pcrf.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
+      realm: epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
       port: 3868
 #     sec_port: 5868
       listen_on: LTE_PCRF_IP
       load_extension:
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dbg_msg_dumps.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dbg_msg_dumps.fdx
           conf: 0x8888
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_rfc5777.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_mip6i.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_nasreq.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_nas_mipv6.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_dcca.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_dcca_3gpp.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_rfc5777.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_mip6i.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_nasreq.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_nas_mipv6.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_dcca.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_dcca_3gpp.fdx
       connect:
-        - identity: pgw.epc.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
+        - identity: pgw.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
           addr: LTE_PGW_IP
           port: 3868
-        - identity: pcscf.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
+        - identity: pcscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
           addr: LTE_PCSCF_IP
           port: 3871
 

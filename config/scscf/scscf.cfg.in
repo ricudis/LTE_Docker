@@ -7,18 +7,18 @@ listen=tcp:LTE_SCSCF_IP:6060
 # SIP / TCP/TLS
 #listen=tls:11.22.33.44:6061
 
-#!define NETWORKNAME "ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org"
+#!define NETWORKNAME "ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org"
 #!define NETWORKNAME_ESC "ims\.mncLTE_MNC\.mccLTE_MCC\.3gppnetwork\.org"
-#!define HOSTNAME "scscf.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org"
+#!define HOSTNAME "scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org"
 #!define HOSTNAME_ESC "scscf\.ims\.mncLTE_MNC\.mccLTE_MCC\.3gppnetwork\.org"
-#!define URI "sip:scscf.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org:6060"
+#!define URI "sip:scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org:6060"
 
-#!subst "/NETWORKNAME/ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org/"
+#!subst "/NETWORKNAME/ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/"
 
-alias=scscf.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
+alias=scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
 
 # ENUM-Server to query:
-#!define ENUM_SUFFIX "ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org."
+#!define ENUM_SUFFIX "ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org."
 
 # SIP-Address of capturing node, if not set, capturing is disabled.
 ##!define CAPTURE_NODE "sip:127.0.0.1:9060"

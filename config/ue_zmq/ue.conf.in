@@ -120,14 +120,22 @@ file_max_size = -1
 # reader: Specify card reader by it's name as listed by 'pcsc_scan'. If empty, try all available readers.
 #####################################################################
 [usim]
-mode = soft
-algo = milenage
-opc  = 63BFA50EE6523365FF14C1F45F88737D
-k    = 00112233445566778899aabbccddeeff
-imsi = 001010123456789
-imei = 353490069873319
+#mode = soft
+#algo = milenage
+#opc  = 63BFA50EE6523365FF14C1F45F88737D
+#k    = 00112233445566778899aabbccddeeff
+#imsi = 001010123456789
+#imei = 353490069873319
 #reader = 
 #pin  = 1234
+#
+mode = soft
+algo = milenage
+k    = 2F9249275BAB908C16572D98B2B37EA0
+opc  = A29D36D61B75F3606E8294DBC5F53A9B
+imsi = 901700000021492
+imei = 353490069873319
+
 
 #####################################################################
 # RRC configuration

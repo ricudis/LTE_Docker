@@ -14,7 +14,7 @@ ARG LIMESDR_CLONE_URL=https://github.com/myriadrf/LimeSuite.git
 ARG LIMESDR_CMAKE_ARGS="-DENABLE_REMOTE=1"
 
 ARG SRSLTE_BUILD_DEPS="gcc g++ cmake git libfftw3-dev libmbedtls-dev libboost-program-options1.71-dev libconfig++-dev libczmq-dev libzmq3-dev libsctp-dev"
-ARG SRSLTE_RUN_DEPS="libfftw3-bin libfftw3-double3 libfftw3-long3 libfftw3-quad3 libfftw3-single3 libmbedcrypto3 libmbedtls12 libmbedx509-0 libboost-program-options1.71.0 libconfig++ libczmq4 libzmq5 libsctp1 libpcsclite-dev"
+ARG SRSLTE_RUN_DEPS="libfftw3-bin libfftw3-3 libfftw3-double3 libfftw3-long3 libfftw3-single3 libmbedcrypto3 libmbedtls12 libmbedx509-0 libboost-program-options1.71.0 libconfig++ libczmq4 libzmq5 libsctp1 libpcsclite-dev"
 ARG SRSLTE_SRC_DIR=srsLTE
 ARG SRSLTE_CLONE_URL=https://github.com/srsLTE/srsLTE.git
 ARG SRSLTE_PREFIX=${LTE_BASE_DIR}/srslte/

@@ -50,11 +50,11 @@ logger:
 #
 #    gtpu:
 #      addr: 10.4.128.21
-#      advertise_name: sgw1.epc.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
+#      advertise_name: sgw1.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
 #
 #    gtpu:
 #     dev: ens3
-#     advertise_name: sgw1.epc.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
+#     advertise_name: sgw1.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
 #
 sgw:
     gtpc:

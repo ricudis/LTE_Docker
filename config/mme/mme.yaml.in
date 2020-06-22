@@ -206,22 +206,22 @@ logger:
 mme:
 #   freeDiameter: /opt/LTE//open5gs/etc/freeDiameter/mme.conf
     freeDiameter:
-      identity: mme.epc.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
-      realm: epc.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
+      identity: mme.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
+      realm: epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
       port: 3868
 #     sec_port: 5868
       listen_on: LTE_MME_IP
       load_extension:
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dbg_msg_dumps.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dbg_msg_dumps.fdx
           conf: 0x8888
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_rfc5777.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_mip6i.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_nasreq.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_nas_mipv6.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_dcca.fdx
-        - module: /opt/LTE//open5gs/lib/x86_64-linux-gnu/freeDiameter/dict_dcca_3gpp.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_rfc5777.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_mip6i.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_nasreq.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_nas_mipv6.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_dcca.fdx
+        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_dcca_3gpp.fdx
       connect:
-        - identity: hss.epc.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org
+        - identity: hss.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
           addr: LTE_HSS_EPC_IP
           port: 3868
     s1ap:
@@ -230,14 +230,14 @@ mme:
 #      addr: LTE_MME_IP
     gummei: 
       plmn_id:
-        mcc: 001
-        mnc: 01
+        mcc: LTE_MCC
+        mnc: LTE_MNC
       mme_gid: 2
       mme_code: 1
     tai:
       plmn_id:
-        mcc: 001
-        mnc: 01
+        mcc: LTE_MCC
+        mnc: LTE_MNC
       tac: [12345,12346,12347]
     security:
         integrity_order : [ EIA1, EIA2, EIA0 ]

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DiameterPeer 
-	FQDN="scscf.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org"
-	Realm="ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org"
+	FQDN="scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org"
+	Realm="ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org"
 	Vendor_Id="10415"
 	Product_Name="CDiameterPeer"
 	AcceptUnknownPeers="1"
@@ -14,7 +14,7 @@
 	DefaultAuthSessionTimeout="3600"
 	MaxAuthSessionTimeout="3600"
 >
-	<Peer FQDN="hss.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org" Realm="ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org" port="3868"/>
+	<Peer FQDN="hss.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org" Realm="ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org" port="3868"/>
 		
 	<Acceptor port="3870" bind="LTE_SCSCF_IP"/>
 
@@ -32,5 +32,5 @@
         -->
         <SupportedVendor vendor="10415" />
 
-	<DefaultRoute FQDN="hss.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org" metric="10"/>
+	<DefaultRoute FQDN="hss.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org" metric="10"/>
 </DiameterPeer>

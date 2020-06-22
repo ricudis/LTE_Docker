@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- HSS Server config -->
 <DiameterPeer 
-	FQDN="hss.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org"
-	Realm="ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org"
+	FQDN="hss.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org"
+	Realm="ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org"
 	Vendor_Id="10415"
 	Product_Name="JavaDiameterPeer"
 	AcceptUnknownPeers="1"
@@ -11,8 +11,8 @@
 	Workers="4"
 	QueueLength="32"
 >
-	<Peer FQDN="icscf.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org" Realm="ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org" port="3869" /> 
-	<Peer FQDN="scscf.ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org" Realm="ims.mncLTE_MNC.mccLTE_MCC.3gppnetwork.org" port="3870" /> 
+	<Peer FQDN="icscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org" Realm="ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org" port="3869" /> 
+	<Peer FQDN="scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org" Realm="ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org" port="3870" /> 
 
 	<Acceptor port="3868" bind="LTE_HSS_IMS_IP" />
 	

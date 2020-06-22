@@ -319,6 +319,10 @@ services:
     build: ./dockers/enb_zmq
     image: lte_enb_zmq
     container_name: lte_enb_zmq
+    cap_add:
+      - SYS_RESOURCE
+      - SYS_NICE
+      - IPC_LOCK
     depends_on:
       - lte_mme
     env_file:
@@ -344,6 +348,9 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_BIND_SERVICE
+      - SYS_RESOURCE
+      - SYS_NICE
+      - IPC_LOCK
     devices:
       - "/dev/net/tun:/dev/net/tun"
     env_file:
