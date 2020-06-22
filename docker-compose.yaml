@@ -341,9 +341,9 @@ services:
         
   lte_enb_radio:
     privileged: true
-    build: ./dockers/enb_zmq
-    image: lte_enb_zmq
-    container_name: lte_enb_zmq
+    build: ./dockers/enb_radio
+    image: lte_enb_radio
+    container_name: lte_enb_radio
     cap_add:
       - SYS_RESOURCE
       - SYS_NICE
@@ -353,9 +353,9 @@ services:
     env_file:
       - .env
     volumes:
-      - ./log/enb_zmq:/opt/LTE/log/enb_zmq
-      - ./config/enb_zmq:/opt/LTE/config/enb_zmq
-      - ./scripts/enb_zmq:/opt/LTE/scripts/enb_zmq
+      - ./log/enb_radio:/opt/LTE/log/enb_radio
+      - ./config/enb_radio:/opt/LTE/config/enb_radio
+      - ./scripts/enb_radio:/opt/LTE/scripts/enb_radio
       - ./scripts/common:/opt/LTE/scripts/common
       - /tmp/lte_ipc_sock:/opt/LTE/sock
     networks:
