@@ -240,8 +240,8 @@ mme:
         mnc: LTE_MNC
       tac: [12345,12346,12347]
     security:
-        integrity_order : [ EIA1, EIA2, EIA0 ]
-        ciphering_order : [ EEA0, EEA1, EEA2 ]
+        integrity_order : [ LTE_EIA_ORDER ]
+        ciphering_order : [ LTE_EEA_ORDER ]
     network_name:
         full: Open5GS
     mme_name: open5gs-mme0
