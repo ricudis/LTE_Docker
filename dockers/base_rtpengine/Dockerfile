@@ -1,11 +1,10 @@
 FROM lte_base
-
 ARG RTPENGINE_BUILD_DEPS="gcc g++ cmake git meson ninja-build build-essential flex bison debhelper-compat default-libmysqlclient-dev \
 	gperf libavcodec-dev libavfilter-dev libavformat-dev \
 	libavutil-dev libbencode-perl libcrypt-openssl-rsa-perl libcrypt-rijndael-perl libcurl4-openssl-dev libdigest-crc-perl \
 	libdigest-hmac-perl libevent-dev libglib2.0-dev libhiredis-dev libio-multiplex-perl libio-socket-inet6-perl libiptc-dev \
 	libjson-glib-dev libnet-interface-perl libpcap0.8-dev libpcre3-dev libsocket6-perl libspandsp-dev libssl-dev libswresample-dev \
-	libsystemd-dev libxmlrpc-core-c3-dev markdown zlib1g-dev libip4tc-dev libip6tc-dev libxtables-dev"
+	libsystemd-dev libxmlrpc-core-c3-dev markdown zlib1g-dev libip4tc-dev libip6tc-dev libxtables-dev libwebsockets-dev"
 ARG RTPENGINE_PROJECT_DIR=rtpengine
 ARG RTPENGINE_CLONE_URL=https://github.com/sipwise/rtpengine.git
 ARG RTPENGINE_PACKAGES="ngcp-rtpengine-daemon ngcp-rtpengine-iptables ngcp-rtpengine-kernel-dkms ngcp-rtpengine-recording-daemon ngcp-rtpengine-utils ngcp-rtpengine"
