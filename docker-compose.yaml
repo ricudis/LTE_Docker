@@ -10,7 +10,12 @@ services:
 #    build: ./dockers/base_oai
 #    image: lte_base_oai
 #    container_name: lte_base_oai
-    
+  
+  build_base_ueransim:
+    build: ./dockers/base_ueransim
+    image: lte_base_ueransim
+    container_name: lte_base_ueransim
+  
   build_base_srslte:
     build: ./dockers/base_srslte
     image: lte_base_srslte
