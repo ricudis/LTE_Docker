@@ -1,16 +1,16 @@
 
-
-dockerized LTE setup: UE + ENB + EPC + IMS
+dockerized LTE / 5G setup: UE + ENB + EPC + IMS + 5G UE / RAN simulator
 
  
 Components:
  * srsLTE (UE + ENB)
- * open5gs (EPC)
+ * open5gs (EPC / 5G core)
  * kamailio SIP (IMS)
  * RTPengine (IMS)
+ * UERANSIM (5G UE / RAN simulator) 
 
 
-There are two flavours built:
+There are two flavours of srsLTE built:
 
 
 ZMQ flavour uses ZMQ for UE <> ENB. This one can run in any system
@@ -26,15 +26,25 @@ Prerequisites:
  * ubuntu 20.04
  * docker
  * docker-compose
+ * 4G RAM (probably less to actually run, building some ASN sources requires a lot of RAM)
+ * 32G disk space
 
 
 You'll need a fairly recent kernel version, because of SCTP
-incompatibilities with docker. Ubuntu 20.04 works out of the box.
+incompatibilities with docker. 
+
+Ubuntu 20.04 works out of the box.
+
 Centos 7 works *only* if you run a fairly reccent kernel (tested under
 5.1.16-1.el7.elrepo.x86_64). Stock 3.10 Centos 7 kernels don't work. 
 
 
 How to build: 
+
+Install ubuntu
+Install docker
+Install docker-compose
+
 
 ```
 docker-compose build
@@ -65,6 +75,16 @@ yet merged to mainline. Apparently the changes required for performance
 cause the ZMQ versions of UE/ENB to have quite long delays on initial
 startup (about 10 minutes). Be patient and they will eventually attach.
 
+
+How to run 5G Core : 
+
+```
+sh lte_5g_core.sh
+```
+
+
+How to capture traffic : 
+
 You can capture pcaps of any network element either by attaching to the
 specific docker containeer ("docker-compose exec lte_xxx /bin/bash") and
 running tcpdump, or (better) by running tcpdump on the appropriate network
@@ -72,7 +92,6 @@ interface docker generates on the host.
 
 
 How to run the RADIO version: 
-
 
 Compile latest LimeUtil (you can also use the lte_base_srslte or any image
 derived from it, like lte_ue_* / lte_enb_* running in priviledge mode so it
@@ -94,11 +113,15 @@ Edit .env and set :
 TX gain on srsenb to the lowest value that works in your environment so you don't cause 
 interference too far away from the testbed)
 
-subscriber data for your SIM are placed in mongo epc database (edit
-config/mongo/subscribers.json, you can also use the lte_epc_web container to
-create a new subscriber). 
+subscriber data for your SIM are placed in mongo epc database (edit config/mongo/subscribers.json, 
+you can also use the lte_hss_epc_web container to create a new subscriber). 
 
+Run
+
+```
 sh lte_radio.sh
+```
+
 
 How to run IMS: 
 
