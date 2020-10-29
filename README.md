@@ -45,6 +45,8 @@ Install ubuntu
 Install docker
 Install docker-compose
 
+Build and run as root
+
 
 ```
 docker-compose build
