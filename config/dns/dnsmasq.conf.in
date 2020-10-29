@@ -14,14 +14,21 @@ address=/epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_HSS_EPC_IP
 address=/hss.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_HSS_EPC_IP
 address=/mme.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_MME_IP
 address=/pcrf.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_PCRF_IP
-address=/pgw.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_PGW_IP
-address=/sgw.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_SGW_IP
+address=/sgwu.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_SGWU_IP
+address=/sgwc.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_SGWC_IP
 address=/pcscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_PCSCF_IP
 address=/icscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_ICSCF_IP
 address=/scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_SCSCF_IP
 address=/dns.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_DNS_IP
 address=/hss_web.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_HSS_EPC_WEB_IP
 address=/hss_web.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_HSS_IMS_WEB_IP
+address=/amf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_AMF_IP
+address=/ausf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_AUSF_IP
+address=/nrf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_NRF_IP
+address=/udm.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_UDM_IP
+address=/udr.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_UDR_IP
+address=/smf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_SMF_IP
+address=/upf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_UPF_IP
 
 interface=eth0
 no-hosts

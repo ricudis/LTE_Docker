@@ -14,7 +14,7 @@ There are two flavours built:
 
 
 ZMQ flavour uses ZMQ for UE <> ENB. This one can run in any system
-available, for simple testing: 
+available, for simple testing
 
 
 RADIO flavour needs a Raspberry PI4B + LimeSDR Mini. This one you can
@@ -23,6 +23,7 @@ use to attach commercial UEs to EPC.
 
 
 Prerequisites:
+ * ubuntu 20.04
  * docker
  * docker-compose
 

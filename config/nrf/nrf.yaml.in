@@ -1,5 +1,3 @@
-db_uri: mongodb://LTE_MONGO_IP/open5gs
-
 #
 # logger:
 #
@@ -18,32 +16,58 @@ db_uri: mongodb://LTE_MONGO_IP/open5gs
 #
 #  o Set OGS_LOG_TRACE to all domain level
 #    level: trace
-#    domain: core,fd,pcrf,event,mem,sock
+#    domain: core,sbi,nrf,event,mem,sock
+#
 logger:
-    file: /opt/LTE/log/pcrf/pcrf.log
+    file: /opt/LTE/log/nrf/nrf.log
 
-pcrf:
-    freeDiameter:
-      identity: pcrf.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
-      realm: epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
-      port: 3868
-      listen_on: LTE_PCRF_IP
-      load_extension:
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dbg_msg_dumps.fdx
-          conf: 0x8888
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_rfc5777.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_mip6i.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_nasreq.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_nas_mipv6.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_dcca.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_dcca_3gpp.fdx
-      connect:
-        - identity: smf.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
-          addr: LTE_SMF_IP
-          port: 3868
-        - identity: pcscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
-          addr: LTE_PCSCF_IP
-          port: 3871
+#
+# nrf:
+#
+#  <SBI Server>
+#
+#  o SBI Server(http://<all address available>:80)
+#    sbi:
+#
+#  o SBI Server(http://<any address>:7777)
+#    sbi:
+#      - addr:
+#          - 0.0.0.0
+#          - ::0
+#        port: 7777
+#
+#  o SBI Server(https://<all address avaiable>:443)
+#    sbi:
+#        tls:
+#          key: nrf.key
+#          pem: nrf.pem
+#
+#  o SBI Server(https://127.0.0.10:443, http://[::1]:80)
+#    sbi:
+#      - addr: 127.0.0.10
+#        tls:
+#          key: nrf.key
+#          pem: nrf.pem
+#      - addr: ::1
+#
+#  o SBI Server(http://nrf.open5gs.org:80)
+#    sbi:
+#      name: nrf.open5gs.org
+#
+#  o SBI Server(http://127.0.0.10:7777)
+#    sbi:
+#      - addr: 127.0.0.10
+#        port: 7777
+#
+#  o SBI Server(http://<eth0 IP address>:80)
+#    sbi:
+#      dev: eth0
+#
+nrf:
+    sbi:
+      addr:
+        - LTE_NRF_IP
+      port: 7777
 
 #
 # parameter:
@@ -102,3 +126,29 @@ max:
 #    big:  8
 #
 pool:
+
+#
+# time:
+#
+#  o NF Instance Validity (Default : 3600 seconds = 1 hour)
+#
+#  o NF Instance Validity (10 seconds)
+#    nf_instance:
+#      validity: 10
+#
+#  o Subscription Validity (Default : 86400 seconds = 1 day)
+#
+#  o Subscription Validity (Disabled)
+#    subscription:
+#      validity: 0
+#
+#  o Subscription Validity (3600 seconds = 1 hour)
+#    subscription:
+#      validity: 3600
+#
+#  o Message Wait Duration (Default : 2000ms = 2 seconds)
+#
+#  o Message Wait Duration (3000 ms)
+#    message:
+#        duration: 3000
+time:

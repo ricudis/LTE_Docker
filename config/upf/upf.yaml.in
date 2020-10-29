@@ -16,38 +16,70 @@
 #
 #  o Set OGS_LOG_TRACE to all domain level
 #    level: trace
-#    domain: core,fd,gtp,pgw,event,tlv,mem,sock
+#    domain: core,pfcp,gtp,upf,event,tlv,mem,sock
 #
 logger:
-    file: /opt/LTE/log/pgw/pgw.log
+    file: /opt/LTE/log/upf/upf.log
+
 #
-# pgw:
+# upf:
 #
-#  <GTP-C Server>
+#  <PFCP Server>
 #
-#  o GTP-C Server(127.0.0.3:2123, [fe80::3%lo]:2123)
-#    gtpc:
-#      addr:
-#        - 127.0.0.3
-#        - fe80::3%lo
-#
-#  o On PGW, Same configuration
-#    (127.0.0.3:2123, [fe80::3%lo]:2123).
-#    gtpc:
-#      - addr: 127.0.0.3
-#      - addr: fe80::3%lo
-#
+#  o PFCP Server(127.0.0.7:8805, ::1:8805)
+#    pfcp:
+#      - addr: 127.0.0.7
+#      - addr: ::1
 #
 #  <GTP-U Server>>
 #
-#  o GTP-U Server(127.0.0.3:2152, [::1]:2152)
+#  o GTP-U Server(all address available)
 #    gtpu:
-#      - addr: 127.0.0.3
-#      - addr: ::1
 #
-#  o Same configuration(127.0.0.3:2152, [::1]:2152) as below.
+#  o GTP-U Server(127.0.0.7:2152, [::1]:2152)
+#    gtpu:
+#      - addr:
+#        - 127.0.0.7
+#        - ::1
+#
+#  o GTP-U Server(127.0.0.1:2152, [::1]:2152)
 #    gtpu:
 #      name: localhost
+#
+#  o User Plane IP Resource information
+#    gtpu:
+#      - addr:
+#        - 127.0.0.7
+#        - ::1
+#        teid_range_indication: 4
+#        teid_range: 10
+#        network_instance: internet
+#        source_interface: 0
+#      - addr: 127.0.10.4
+#        teid_range_indication: 4
+#        teid_range: 5
+#        network_instance: ims
+#        source_interface: 1
+#
+#  o Provide custom UPF GTP-U address to be advertised inside NGAP messages
+#    gtpu:
+#      - addr: 10.4.128.21
+#        advertise_addr: 172.24.15.30
+#
+#    gtpu:
+#      - addr: 10.4.128.21
+#        advertise_addr:
+#        - 127.0.0.1
+#        - ::1
+#
+#    gtpu:
+#      - addr: 10.4.128.21
+#        advertise_name: upf1.5gc.mnc001.mcc001.3gppnetwork.org
+#
+#    gtpu:
+#      - dev: ens3
+#        advertise_name: upf1.5gc.mnc001.mcc001.3gppnetwork.org
+#
 #
 #  <PDN Configuration with UE Pool>
 #
@@ -66,7 +98,7 @@ logger:
 #      - addr: cafe:1::1/64
 #
 #
-#  o Specific APN(e.g 'volte') uses 10.46.0.1/16, cafe:2::1/64
+#  o Specific DNN/APN(e.g 'ims') uses 10.46.0.1/16, cafe:2::1/64
 #    All other APNs use 10.45.0.1/16, cafe:1::1/64
 #    $ sudo ip addr add 10.45.0.1/16 dev ogstun
 #    $ sudo ip addr add 10.46.0.1/16 dev ogstun
@@ -75,11 +107,13 @@ logger:
 #
 #    pdn:
 #      - addr: 10.45.0.1/16
+#        apn: internet
 #      - addr: cafe:1::1/64
+#        apn: internet
 #      - addr: 10.46.0.1/16
-#        apn: volte
+#        apn: ims
 #      - addr: cafe:2::1/64
-#        apn: volte
+#        apn: ims
 #
 #  o Multiple Devices (default: ogstun)
 #    $ sudo ip addr add 10.45.0.1/16 dev ogstun
@@ -89,13 +123,15 @@ logger:
 #
 #    pdn:
 #      - addr: 10.45.0.1/16
+#        apn: internet
 #      - addr: cafe:1::1/64
+#        apn: internet
 #        dev: ogstun2
 #      - addr: 10.46.0.1/16
-#        apn: volte
+#        apn: ims
 #        dev: ogstun3
 #      - addr: cafe:2::1/64
-#        apn: volte
+#        apn: ims
 #        dev: ogstun3
 #
 #  o Pool Range Sample
@@ -125,51 +161,11 @@ logger:
 #          - cafe::a0-cafe:b0
 #          - cafe::c0-cafe:d0
 #
-#  <Domain Name Server>
-#
-#  o Primary/Secondary can be configured. Others are ignored.
-#
-#  <MTU Size>
-#
-#  o Provisioning a limit on the size of the packets sent by the MS
-#    to avoid packet fragmentation in the backbone network
-#    between the MS and the GGSN/PGW and/or across the (S)Gi reference point)
-#    when some of the backbone links does not support
-#    packets larger then 1500 octets
-#
-#  <P-CSCF>
-#
-#  o Proxy Call Session Control Function
-#
-#    p-cscf:
-#      - 127.0.0.1
-#      - ::1
-#
-pgw:
-#   freeDiameter: /opt/LTE//open5gs/etc/freeDiameter/pgw.conf
-    freeDiameter:
-      identity: pgw.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
-      realm: epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
-      port: 3868
-#     sec_port: 5868
-      listen_on: LTE_PGW_IP
-      load_extension:
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dbg_msg_dumps.fdx
-          conf: 0x8888
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_rfc5777.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_mip6i.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_nasreq.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_nas_mipv6.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_dcca.fdx
-        - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dict_dcca_3gpp.fdx
-      connect:
-        - identity: pcrf.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
-          addr: LTE_PCRF_IP
-          port: 3868
-    gtpc:
-      - addr: LTE_PGW_IP
+upf:
+    pfcp:
+      - addr: LTE_UPF_IP
     gtpu:
-      - addr: LTE_PGW_IP
+      - addr: LTE_UPF_IP
     pdn:
       - addr: LTE_UE_SUBNET_IP4
         apn: internet
@@ -183,12 +179,20 @@ pgw:
       - addr: LTE_UE_SUBNET_IMS_IP6
         apn: ims
         dev: ogstun_ims
-    dns:
-      - LTE_DNS_IP
-    mtu: 1400
 
-p-cscf:
-  - LTE_PSCSF_IP
+#
+# smf:
+#
+#  <PFCP Client>>
+#
+#  o PFCP Client(127.0.0.3:8805)
+#
+#    pfcp:
+#      addr: 127.0.0.3
+#
+smf:
+    pfcp:
+        addr: LTE_SMF_IP
 
 #
 # parameter:
@@ -211,21 +215,18 @@ p-cscf:
 #  o Disable Stateless Address Autoconfiguration for IPv6
 #      no_slaac: true
 #
+#
 parameter:
+    no_ipv6: true
+    prefer_ipv4: true
 
 #
 # max:
 #
-# o Maximum Number of SGW per MME
-#    sgw: 32
-# o Maximum Number of PGW per MME
-#    pgw: 32
-# o Maximum Number of VLR per MME
-#    vlr: 32
-# o Maximum Number of eNodeB per MME
-#    enb: 32
-# o Maximum Number of UE per eNodeB
-#    ue: 128
+# o Maximum Number of UE per AMF/MME
+#    ue: 1024
+# o Maximum Number of gNB/eNB per AMF/MME
+#    gnb: 32
 #
 max:
 
@@ -234,7 +235,7 @@ max:
 #
 # o The Number of Default Memory Pool Size
 #
-#   - Pool-size 128         => 8192 Number
+#   - Pool-size 128         => 32768 Number
 #   - Pool-size 256         => 4096 Number
 #   - Pool-size 512         => 2048 Number
 #   - Pool-size 1024        => 1024 Number
@@ -242,18 +243,12 @@ max:
 #   - Pool-size 8192        => 128 Number
 #   - Pool-size 1024*1024   => 8 Number
 #
-#    128:  8192
+#    128:  32768
 #    256:  4096
 #    512:  2048
 #    1024: 1024
 #    2048: 512
 #    8192: 128
 #    big:  8
-#
-# o Memory of Packet Buffering in SGW
-#   - Maximum Number of packet(SDU size = 8Kbytes) pool in SGW
-#   - SGW Memory Usage : 65536 * 8Kbytes = 512Mbytes
-#
-#   packet: 65536
 #
 pool:

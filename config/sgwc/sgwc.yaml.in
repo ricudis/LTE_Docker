@@ -47,7 +47,9 @@ logger:
 #
 sgwc:
     gtpc:
+      - addr: LTE_SGWC_IP
     pfcp:
+      - addr: LTE_SGWC_IP
 
 #
 # sgwu:
@@ -103,7 +105,7 @@ sgwc:
 #
 sgwu:
     pfcp:
-      - addr: 127.0.0.6
+      - addr: LTE_SGWU_IP
 
 #
 # parameter:
@@ -127,6 +129,7 @@ sgwu:
 #      no_slaac: true
 #
 parameter:
+    no_ipv6: true
     prefer_ipv4: true
 
 #

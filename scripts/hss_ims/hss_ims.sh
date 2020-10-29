@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p ${LTE_BASE_DIR}/config/hss_ims/
 cd ${LTE_BASE_DIR}/config/hss_ims/
 for i in * ; do
 	${LTE_BASE_DIR}/scripts/common/subst.sh ./$i /opt/OpenIMSCore/FHoSS/deploy/$i

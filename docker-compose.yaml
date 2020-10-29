@@ -6,6 +6,11 @@ services:
     image: lte_base
     container_name: lte_base
     
+#  build_base_oai:
+#    build: ./dockers/base_oai
+#    image: lte_base_oai
+#    container_name: lte_base_oai
+    
   build_base_srslte:
     build: ./dockers/base_srslte
     image: lte_base_srslte
@@ -89,8 +94,10 @@ services:
     dns: ${LTE_DNS_IP}
     depends_on:
       - lte_dns
-      - lte_pgw
-      - lte_sgw
+      - lte_smf
+      - lte_upf
+      - lte_sgwc
+      - lte_sgwu
       - lte_hss_epc
     devices:
       - "/dev/net/tun:/dev/net/tun"
@@ -104,6 +111,111 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_MME_IP}
+        
+  lte_amf:
+    build: ./dockers/amf
+    image: lte_amf
+    container_name: lte_amf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_nrf
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/amf:/opt/LTE/log/amf
+      - ./config/amf:/opt/LTE/config/amf
+      - ./scripts/amf:/opt/LTE/scripts/amf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_AMF_IP}
+        
+  lte_ausf:
+    build: ./dockers/ausf
+    image: lte_ausf
+    container_name: lte_ausf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_nrf
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/ausf:/opt/LTE/log/ausf
+      - ./config/ausf:/opt/LTE/config/ausf
+      - ./scripts/ausf:/opt/LTE/scripts/ausf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_AUSF_IP}
+
+  lte_nrf:
+    build: ./dockers/nrf
+    image: lte_nrf
+    container_name: lte_nrf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/nrf:/opt/LTE/log/nrf
+      - ./config/nrf:/opt/LTE/config/nrf
+      - ./scripts/nrf:/opt/LTE/scripts/nrf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_NRF_IP}
+        
+  lte_udm:
+    build: ./dockers/udm
+    image: lte_udm
+    container_name: lte_udm
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_nrf
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/udm:/opt/LTE/log/udm
+      - ./config/udm:/opt/LTE/config/udm
+      - ./scripts/udm:/opt/LTE/scripts/udm
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_UDM_IP}
+        
+  lte_udr:
+    build: ./dockers/udr
+    image: lte_udr
+    container_name: lte_udr
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mongo
+      - lte_nrf
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/udr:/opt/LTE/log/udr
+      - ./config/udr:/opt/LTE/config/udr
+      - ./scripts/udr:/opt/LTE/scripts/udr
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_UDR_IP}
         
   lte_hss_epc:
     build: ./dockers/hss_epc
@@ -147,13 +259,14 @@ services:
        core:
          ipv4_address: ${LTE_HSS_EPC_WEB_IP}
         
-  lte_sgw:
-    build: ./dockers/sgw
-    image: lte_sgw
-    container_name: lte_sgw
+  lte_sgwc:
+    build: ./dockers/sgwc
+    image: lte_sgwc
+    container_name: lte_sgwc
     dns: ${LTE_DNS_IP}
     depends_on:
       - lte_dns
+      - lte_sgwu
     cap_add:
       - NET_ADMIN
       - NET_BIND_SERVICE
@@ -162,40 +275,83 @@ services:
     env_file:
       - .env
     volumes:
-      - ./log/sgw:/opt/LTE/log/sgw
-      - ./config/sgw:/opt/LTE/config/sgw
-      - ./scripts/sgw:/opt/LTE/scripts/sgw
+      - ./log/sgwc:/opt/LTE/log/sgwc
+      - ./config/sgwc:/opt/LTE/config/sgwc
+      - ./scripts/sgwc:/opt/LTE/scripts/sgwc
       - ./scripts/common:/opt/LTE/scripts/common
     networks:
       core:
-        ipv4_address: ${LTE_SGW_IP}
+        ipv4_address: ${LTE_SGWC_IP}
         
-  lte_pgw:
-    build: ./dockers/pgw
-    image: lte_pgw
-    container_name: lte_pgw
+  lte_sgwu:
+    build: ./dockers/sgwu
+    image: lte_sgwu
+    container_name: lte_sgwu
     dns: ${LTE_DNS_IP}
     depends_on:
       - lte_dns
-      - lte_sgw
-      - lte_pcrf
     cap_add:
       - NET_ADMIN
       - NET_BIND_SERVICE
     devices:
       - "/dev/net/tun:/dev/net/tun"
-    sysctls:
-      - net.ipv4.ip_forward=1
     env_file:
       - .env
     volumes:
-      - ./log/pgw:/opt/LTE/log/pgw
-      - ./config/pgw:/opt/LTE/config/pgw
-      - ./scripts/pgw:/opt/LTE/scripts/pgw
+      - ./log/sgwu:/opt/LTE/log/sgwu
+      - ./config/sgwu:/opt/LTE/config/sgwu
+      - ./scripts/sgwu:/opt/LTE/scripts/sgwu
       - ./scripts/common:/opt/LTE/scripts/common
     networks:
       core:
-        ipv4_address: ${LTE_PGW_IP}
+        ipv4_address: ${LTE_SGWU_IP}
+        
+  lte_smf:
+    build: ./dockers/smf
+    image: lte_smf
+    container_name: lte_smf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+    cap_add:
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/smf:/opt/LTE/log/smf
+      - ./config/smf:/opt/LTE/config/smf
+      - ./scripts/smf:/opt/LTE/scripts/smf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_SMF_IP}
+        
+  lte_upf:
+    build: ./dockers/upf
+    image: lte_upf
+    container_name: lte_upf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_smf
+    cap_add:
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/upf:/opt/LTE/log/upf
+      - ./config/upf:/opt/LTE/config/upf
+      - ./scripts/upf:/opt/LTE/scripts/upf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_UPF_IP}
 
   lte_pcrf:
     build: ./dockers/pcrf

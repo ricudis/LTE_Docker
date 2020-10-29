@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p ${LTE_BASE_DIR}/config/dns
 LTE_DNS_CONFIG=${LTE_BASE_DIR}/config/dns/dnsmasq.conf
 ${LTE_BASE_DIR}/scripts/common/subst.sh ${LTE_BASE_DIR}/config/dns/dnsmasq.conf.in /etc/dnsmasq.conf
 echo "nameserver $LTE_DNS_IP" > /etc/resolv.conf
