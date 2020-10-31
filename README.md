@@ -40,10 +40,11 @@ Centos 7 works *only* if you run a fairly reccent kernel (tested under
 
 
 How to build: 
+ * Install ubuntu
+ * Install docker
+ * Install docker-compose
 
-Install ubuntu
-Install docker
-Install docker-compose
+Build and run as root
 
 
 ```
@@ -93,7 +94,16 @@ interface docker generates on the host.
 
 How to run the RADIO version: 
 
-Compile latest LimeUtil (you can also use the lte_base_srslte or any image
+Requirements: 
+ * LimeSDR Mini USB (available from https://www.crowdsupply.com/lime-micro/limesdr-mini/ - I use the $299 package that includes board, aluminum case and antennas, though you can also use the individual board + antenna + acrylic case available at the same page). 
+ * Raspberry PI 4B 4GB model (available from https://www.raspberrypi.org/products/raspberry-pi-4-model-b/?resellerType=home, better get a complete kit wich includes case, power supply, cables etc)
+ * Any CCID compliant SIM to USB adapter (you will only need this if you need to reprogram the SysmoCOM SIM cards for use with IMS, not needed for normal UE operation)
+ * SysmoCOM SIM cards (available from http://shop.sysmocom.de/t/sim-card-related/sim-cards - I use the Green ones but they're obsoleted, get the black oned PLUS ADM keys if you want to reprogram for IMS use) 
+ 
+As an alternative to Raspberry PI, most Intel NUCs or similar systems should work fine
+ 
+ 
+ Compile latest LimeUtil (you can also use the lte_base_srslte or any image
 derived from it, like lte_ue_* / lte_enb_* running in priviledge mode so it
 can access USB).
 
