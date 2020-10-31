@@ -91,6 +91,24 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_MYSQL_IP}
+        
+  lte_ueransim:
+    build: ./dockers/ueransim
+    image: lte_ueransim
+    container_name: lte_ueransim
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+    env_file:
+      - .env
+    volumes:
+      - ./log/ueransim:/opt/LTE/log/ueransim
+      - ./config/ueransim:/opt/LTE/config/ueransim
+      - ./scripts/ueransim:/opt/LTE/scripts/ueransim
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_UERANSIM_IP}
     
   lte_mme:
     build: ./dockers/mme

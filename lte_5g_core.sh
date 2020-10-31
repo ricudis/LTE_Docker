@@ -5,12 +5,10 @@ docker container prune -f
 docker network prune -f
 docker image prune -f
 
-docker-compose up lte_dns lte_amf lte_ausf lte_nrf lte_sgwc lte_sgwu lte_smf lte_udm lte_udr lte_upf
-
-for cnt in lte_dns lte_mongo lte_amf lte_ausf lte_nrf lte_sgwc lte_sgwu lte_smf lte_udm lte_udr lte_upf ; do
+for cnt in dns mongo amf ausf nrf sgwc sgwu smf udm udr upf ; do
 	mkdir -p log/$cnt 2> /dev/null 
-	echo -n "Starting $cnt in window $window_no..."
-	docker-compose up $cnt &
+	echo -n "Starting $cnt..."
+	docker-compose up lte_$cnt &
 	sleep 5
 	echo ""
 done
