@@ -4,16 +4,18 @@ ARG OPEN5GS_BUILD_DEPS="gcc g++ cmake git meson ninja-build build-essential flex
 	libgnutls28-dev libgcrypt-dev libssl-dev libidn11-dev libmongoc-dev \
 	libbson-dev libyaml-dev libmicrohttpd-dev libsctp-dev"
 ARG OPEN5GS_RUN_DEPS="libgcrypt20 libssl1.1 libmongoc-1.0-0 libbson-1.0-0 \
-	libyaml-0-2 libmicrohttpd12 libidn11 libsctp1 radvd libcurl4-gnutls-dev"
+	libyaml-0-2 libmicrohttpd12 libidn11 libsctp1 radvd libcurl4-gnutls-dev libnghttp2-dev"
 ARG OPEN5GS_SRC_DIR=open5gs
 ARG OPEN5GS_CLONE_URL=https://github.com/open5gs/open5gs
 ARG OPEN5GS_PREFIX=${LTE_BASE_DIR}/open5gs/
+ARG OPEN5GS_VERSION=v2.3.2
 
 ARG MAKE_ARGS="-j2"
 
 RUN apt-get update && apt-get install -y --no-install-recommends ${OPEN5GS_BUILD_DEPS} ${OPEN5GS_RUN_DEPS} \
 	&& git clone ${OPEN5GS_CLONE_URL} \
 	&& cd ${OPEN5GS_SRC_DIR} \
+	&& git checkout ${OPEN5GS_VERSION} \
 	&& meson build_dir -Dprefix=${OPEN5GS_PREFIX} \
 	&& ninja -C build_dir \
 	&& cd build_dir \

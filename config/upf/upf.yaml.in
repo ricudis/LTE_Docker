@@ -166,19 +166,8 @@ upf:
       - addr: LTE_UPF_IP
     gtpu:
       - addr: LTE_UPF_IP
-    pdn:
+    subnet:
       - addr: LTE_UE_SUBNET_IP4
-        apn: internet
-        dev: ogstun_internet
-      - addr: LTE_UE_SUBNET_IP6
-        apn: internet
-        dev: ogstun_internet
-      - addr: LTE_UE_SUBNET_IMS_IP4
-        apn: ims
-        dev: ogstun_ims
-      - addr: LTE_UE_SUBNET_IMS_IP6
-        apn: ims
-        dev: ogstun_ims
 
 #
 # smf:

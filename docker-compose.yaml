@@ -16,10 +16,10 @@ services:
     image: lte_base_ueransim
     container_name: lte_base_ueransim
   
-  build_base_srslte:
-    build: ./dockers/base_srslte
-    image: lte_base_srslte
-    container_name: lte_base_srslte
+  build_base_srsran:
+    build: ./dockers/base_srsran
+    image: lte_base_srsran
+    container_name: lte_base_srsran
     
   build_base_open5gs:
     build: ./dockers/base_open5gs
@@ -92,24 +92,6 @@ services:
       core:
         ipv4_address: ${LTE_MYSQL_IP}
         
-  lte_ueransim:
-    build: ./dockers/ueransim
-    image: lte_ueransim
-    container_name: lte_ueransim
-    dns: ${LTE_DNS_IP}
-    depends_on:
-      - lte_dns
-    env_file:
-      - .env
-    volumes:
-      - ./log/ueransim:/opt/LTE/log/ueransim
-      - ./config/ueransim:/opt/LTE/config/ueransim
-      - ./scripts/ueransim:/opt/LTE/scripts/ueransim
-      - ./scripts/common:/opt/LTE/scripts/common
-    networks:
-      core:
-        ipv4_address: ${LTE_UERANSIM_IP}
-    
   lte_mme:
     build: ./dockers/mme
     image: lte_mme
@@ -117,7 +99,6 @@ services:
     dns: ${LTE_DNS_IP}
     depends_on:
       - lte_dns
-      - lte_smf
       - lte_upf
       - lte_sgwc
       - lte_sgwu
@@ -289,7 +270,6 @@ services:
     dns: ${LTE_DNS_IP}
     depends_on:
       - lte_dns
-      - lte_sgwu
     cap_add:
       - NET_ADMIN
       - NET_BIND_SERVICE
@@ -313,6 +293,7 @@ services:
     dns: ${LTE_DNS_IP}
     depends_on:
       - lte_dns
+      - lte_sgwc
     cap_add:
       - NET_ADMIN
       - NET_BIND_SERVICE
@@ -336,6 +317,7 @@ services:
     dns: ${LTE_DNS_IP}
     depends_on:
       - lte_dns
+      - lte_nrf
     cap_add:
       - NET_ADMIN
       - NET_BIND_SERVICE
@@ -532,7 +514,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./log/enb_radio:/opt/LTE/log/enb_radio
+      - ./log/enb:/opt/LTE/log/enb_radio
       - ./config/enb_radio:/opt/LTE/config/enb_radio
       - ./scripts/enb_radio:/opt/LTE/scripts/enb_radio
       - ./scripts/common:/opt/LTE/scripts/common
@@ -568,13 +550,63 @@ services:
     networks:
       radio_zmq:
         ipv4_address: ${LTE_RZMQ_UE_IP}
+        
+  lte_nr_gnb:
+    build: ./dockers/nr_gnb
+    image: lte_nr_gnb
+    container_name: lte_nr_gnb
+    cap_add:
+      - SYS_RESOURCE
+      - SYS_NICE
+      - IPC_LOCK
+    depends_on:
+      - lte_amf
+    env_file:
+      - .env
+    volumes:
+      - ./log/nr_gnb:/opt/LTE/log/nr_gnb
+      - ./config/nr_gnb:/opt/LTE/config/nr_gnb
+      - ./scripts/nr_gnb:/opt/LTE/scripts/nr_gnb
+      - ./scripts/common:/opt/LTE/scripts/common
+      - /tmp/lte_ipc_sock:/opt/LTE/sock
+    networks:
+      core:
+        ipv4_address: ${LTE_NR_GNB_IP}
+      radio_zmq:
+        ipv4_address: ${LTE_NR_GNB_RADIO_IP}
+
+  lte_nr_ue:
+    build: ./dockers/nr_ue
+    image: lte_nr_ue
+    container_name: lte_nr_ue
+    depends_on:
+      - lte_nr_gnb
+    cap_add:
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+      - SYS_RESOURCE
+      - SYS_NICE
+      - IPC_LOCK
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/nr_ue:/opt/LTE/log/nr_ue
+      - ./config/nr_ue:/opt/LTE/config/nr_ue
+      - ./scripts/nr_ue:/opt/LTE/scripts/nr_ue
+      - ./scripts/common:/opt/LTE/scripts/common
+      - /tmp/lte_ipc_sock:/opt/LTE/sock
+    networks:
+      radio_zmq:
+        ipv4_address: ${LTE_NR_UE_RADIO_IP}
 
 
 networks:
   radio_zmq:
     ipam:
       config:
-       - subnet: ${LTE_RZMQ_SUBNET}
+        - subnet: ${LTE_RZMQ_SUBNET}
        
   core:
     ipam:

@@ -206,7 +206,6 @@ mme:
       identity: mme.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
       realm: epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
       port: 3868
-      sec_port: 5868
       listen_on: LTE_MME_IP
       load_extension:
         - module: /opt/LTE//open5gs/lib/LTE_BUILD_ARCH/freeDiameter/dbg_msg_dumps.fdx
@@ -237,8 +236,8 @@ mme:
         mnc: LTE_MNC
       tac: [12345,12346,12347]
     security:
-        integrity_order : [ LTE_EIA_ORDER ]
-        ciphering_order : [ LTE_EEA_ORDER ]
+        integrity_order: [ LTE_EIA_ORDER ]
+        ciphering_order: [ LTE_EEA_ORDER ]
     network_name:
         full: Open5GS
     mme_name: open5gs-mme0

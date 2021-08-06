@@ -171,25 +171,23 @@ smf:
     sbi:
       - addr: LTE_SMF_IP
         port: 7777
-    gtpc:
-      - addr: LTE_SMF_IP
     pfcp:
       - addr: LTE_SMF_IP
-    p-cscf:
-      - LTE_PCSCF_IP
-    pdn:
+      - addr: ::1
+    gtpc:
+      - addr: LTE_SMF_IP
+      - addr: ::1
+    gtpu:
+      - addr: LTE_SMF_IP
+    subnet:
       - addr: LTE_UE_SUBNET_IP4
-        apn: internet
-        dev: ogstun_internet
+        dnn: internet
       - addr: LTE_UE_SUBNET_IP6
-        apn: internet
-        dev: ogstun_internet
+        dnn: internet
       - addr: LTE_UE_SUBNET_IMS_IP4
-        apn: ims
-        dev: ogstun_ims
+        dnn: ims
       - addr: LTE_UE_SUBNET_IMS_IP6
-        apn: ims
-        dev: ogstun_ims
+        dnn: ims
     dns:
       - LTE_DNS_IP
     mtu: 1400
@@ -211,6 +209,9 @@ smf:
         - identity: pcrf.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
           addr: LTE_PCRF_IP
           port: 3868
+
+#
+
 
 #
 # nrf:

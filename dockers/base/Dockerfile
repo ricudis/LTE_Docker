@@ -17,7 +17,7 @@ WORKDIR ${LTE_SRC_DIR}
 #
 
 ARG ADD_PACKAGES="ca-certificates tzdata usbutils screen net-tools vim ifupdown iptables net-tools \
-	iputils-ping wget tcpdump ntpdate ntp netcat apt-utils tmux"
+	iputils-ping wget tcpdump ntpdate ntp netcat apt-utils tmux iproute2"
 
 RUN apt-get update && apt-get install -y --no-install-recommends ${ADD_PACKAGES} \
 	&& apt-get clean autoclean && apt-get autoremove --yes \
