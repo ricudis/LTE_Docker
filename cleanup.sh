@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo pkill -TERM tcpdump
 for i in 1 2 3 ; do
 	docker-compose down
 	docker system prune -f
