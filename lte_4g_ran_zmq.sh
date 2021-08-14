@@ -9,6 +9,9 @@ for cnt in lte_enb_zmq lte_ue_zmq ; do
 	echo ""
 done
 
-echo -n "Starting bash in lte_ue_zmq context"
+echo "Waiting 60 seconds for everything to get initialized..."
+sleep 60
+
+echo "Starting bash in lte_ue_zmq context"
 docker-compose exec lte_ue_zmq /bin/bash
 

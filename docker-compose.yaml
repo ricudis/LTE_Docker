@@ -342,7 +342,10 @@ services:
     depends_on:
       - lte_dns
       - lte_smf
+    sysctls:
+      - net.ipv4.ip_forward=1
     cap_add:
+      - SYS_ADMIN
       - NET_ADMIN
       - NET_BIND_SERVICE
     devices:

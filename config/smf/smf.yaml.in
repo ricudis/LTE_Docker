@@ -193,7 +193,7 @@ smf:
     mtu: 1400
     freeDiameter:
       identity: smf.epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
-      realm: smf.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
+      realm: epc.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
       port: 3868
       listen_on: LTE_SMF_IP
       load_extension:
