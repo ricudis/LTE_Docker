@@ -1,4 +1,4 @@
-FROM lte_base
+FROM ubuntu:20.04
 
 ARG ADD_PACKAGES="mongo-tools mongodb-server mongodb-clients"
 RUN apt-get update && apt-get install -y --no-install-recommends ${ADD_PACKAGES} \
