@@ -10,3 +10,7 @@ ${LTE_BASE_DIR}/scripts/common/subst.sh ${LTE_BASE_DIR}/config/nr_ue/ue.yaml.in 
 echo "nameserver $LTE_DNS_IP" > /etc/resolv.conf
 /opt/LTE/ueransim/bin/nr-ue -c ${UERANSIM_NR_UE_CONFIG}
 
+
+root@b1f934badf91:/opt/LTE/src# route add -host 10.45.0.1 dev uesimtun0
+root@b1f934badf91:/opt/LTE/src# route add -net default gw 10.45.0.1
+root@b1f934badf91:/opt/LTE/src# ping 8.8.8.8
