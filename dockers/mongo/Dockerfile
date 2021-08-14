@@ -9,7 +9,7 @@ ENV LTE_SRC_DIR=${LTE_BASE_DIR}/src/
 
 WORKDIR ${LTE_SRC_DIR}
 
-ARG ADD_PACKAGES="mongo-tools mongodb-server mongodb-clients"
+ARG ADD_PACKAGES="mongo-tools mongodb-server mongodb-clients netcat"
 RUN apt-get update && apt-get install -y --no-install-recommends ${ADD_PACKAGES} \
         && apt-get clean autoclean && apt-get autoremove --yes \
         && rm -rf /var/lib/apt/lists/*
