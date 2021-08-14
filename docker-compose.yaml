@@ -5,42 +5,42 @@ services:
     build: ./dockers/base
     image: lte_base
     container_name: lte_base
-    
+
 #  build_base_oai:
 #    build: ./dockers/base_oai
 #    image: lte_base_oai
 #    container_name: lte_base_oai
-  
+
   build_base_ueransim:
     build: ./dockers/base_ueransim
     image: lte_base_ueransim
     container_name: lte_base_ueransim
-  
+
   build_base_srsran:
     build: ./dockers/base_srsran
     image: lte_base_srsran
     container_name: lte_base_srsran
-    
+
   build_base_open5gs:
     build: ./dockers/base_open5gs
     image: lte_base_open5gs
     container_name: lte_base_open5gs
-  
-  build_base_kamailio:
-    build: ./dockers/base_kamailio
-    image: lte_base_kamailio
-    container_name: lte_base_kamailio
-    
-  build_base_rtpengine:
-    build: ./dockers/base_rtpengine
-    image: lte_base_rtpengine
-    container_name: lte_base_rtpengine
-    
-  build_base_fhoss:
-    build: ./dockers/base_fhoss
-    image: lte_base_fhoss
-    container_name: lte_base_fhoss
-    
+
+#  build_base_kamailio:
+#    build: ./dockers/base_kamailio
+#    image: lte_base_kamailio
+#    container_name: lte_base_kamailio
+#
+#  build_base_rtpengine:
+#    build: ./dockers/base_rtpengine
+#    image: lte_base_rtpengine
+#    container_name: lte_base_rtpengine
+#
+#  build_base_fhoss:
+#    build: ./dockers/base_fhoss
+#    image: lte_base_fhoss
+#    container_name: lte_base_fhoss
+
   lte_dns:
     build: ./dockers/dns
     image: lte_dns
@@ -55,7 +55,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_DNS_IP}
-    
+
   lte_mongo:
     build: ./dockers/mongo
     image: lte_mongo
@@ -91,7 +91,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_MYSQL_IP}
-        
+
   lte_mme:
     build: ./dockers/mme
     image: lte_mme
@@ -115,7 +115,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_MME_IP}
-        
+
   lte_amf:
     build: ./dockers/amf
     image: lte_amf
@@ -136,7 +136,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_AMF_IP}
-        
+
   lte_ausf:
     build: ./dockers/ausf
     image: lte_ausf
@@ -177,7 +177,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_NRF_IP}
-        
+
   lte_nssf:
     build: ./dockers/nssf
     image: lte_nssf
@@ -197,7 +197,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_NSSF_IP}
-        
+
   lte_bsf:
     build: ./dockers/bsf
     image: lte_bsf
@@ -217,7 +217,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_BSF_IP}
-        
+
   lte_pcf:
     build: ./dockers/pcf
     image: lte_pcf
@@ -238,7 +238,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_PCF_IP}
-        
+
   lte_udr:
     build: ./dockers/udr
     image: lte_udr
@@ -260,7 +260,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_UDR_IP}
-        
+
   lte_udm:
     build: ./dockers/udm
     image: lte_udm
@@ -282,7 +282,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_UDM_IP}
-        
+
   lte_hss_epc:
     build: ./dockers/hss_epc
     image: lte_hss_epc
@@ -301,7 +301,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_HSS_EPC_IP}
-        
+
   lte_hss_epc_web:
     build: ./dockers/hss_epc_web
     image: lte_hss_epc_web
@@ -324,7 +324,7 @@ services:
     networks:
        core:
          ipv4_address: ${LTE_HSS_EPC_WEB_IP}
-        
+
   lte_sgwc:
     build: ./dockers/sgwc
     image: lte_sgwc
@@ -347,7 +347,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_SGWC_IP}
-        
+
   lte_sgwu:
     build: ./dockers/sgwu
     image: lte_sgwu
@@ -371,7 +371,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_SGWU_IP}
-        
+
   lte_smf:
     build: ./dockers/smf
     image: lte_smf
@@ -395,7 +395,7 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_SMF_IP}
-        
+
   lte_upf:
     build: ./dockers/upf
     image: lte_upf
@@ -441,105 +441,105 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_PCRF_IP}
-        
-  lte_icscf:
-    build: ./dockers/icscf
-    image: lte_icscf
-    container_name: lte_icscf
-    dns: ${LTE_DNS_IP}
-    depends_on:
-      - lte_dns
-      - lte_mysql
-      - lte_hss_ims
-    env_file:
-      - .env
-    volumes:
-      - ./log/icscf:/opt/LTE/log/icscf
-      - ./config/icscf:/opt/LTE/config/icscf
-      - ./scripts/icscf:/opt/LTE/scripts/icscf
-      - ./scripts/common:/opt/LTE/scripts/common
-    networks:
-      core:
-        ipv4_address: ${LTE_ICSCF_IP}
-        
-  lte_pcscf:
-    build: ./dockers/pcscf
-    image: lte_pcscf
-    container_name: lte_pcscf
-    dns: ${LTE_DNS_IP}
-    depends_on:
-      - lte_dns
-      - lte_mysql
-      - lte_hss_ims
-      - lte_pcrf
-    env_file:
-      - .env
-    volumes:
-      - ./log/pcscf:/opt/LTE/log/pcscf
-      - ./config/pcscf:/opt/LTE/config/pcscf
-      - ./scripts/pcscf:/opt/LTE/scripts/pcscf
-      - ./scripts/common:/opt/LTE/scripts/common
-    networks:
-      core:
-        ipv4_address: ${LTE_PCSCF_IP}
-        
-  lte_scscf:
-    build: ./dockers/scscf
-    image: lte_scscf
-    container_name: lte_scscf
-    dns: ${LTE_DNS_IP}
-    depends_on:
-      - lte_dns
-      - lte_mysql
-      - lte_hss_ims
-    env_file:
-      - .env
-    volumes:
-      - ./log/scscf:/opt/LTE/log/scscf
-      - ./config/scscf:/opt/LTE/config/scscf
-      - ./scripts/scscf:/opt/LTE/scripts/scscf
-      - ./scripts/common:/opt/LTE/scripts/common
-    networks:
-      core:
-        ipv4_address: ${LTE_SCSCF_IP}
-        
-  lte_hss_ims:
-    build: ./dockers/hss_ims
-    image: lte_hss_ims
-    container_name: lte_hss_ims
-    dns: ${LTE_DNS_IP}
-    depends_on:
-      - lte_dns
-      - lte_mysql
-    env_file:
-      - .env
-    volumes:
-      - ./log/hss_ims:/opt/LTE/log/hss_ims
-      - ./config/hss_ims:/opt/LTE/config/hss_ims
-      - ./scripts/hss_ims:/opt/LTE/scripts/hss_ims
-      - ./scripts/common:/opt/LTE/scripts/common
-    networks:
-      core:
-        ipv4_address: ${LTE_HSS_IMS_IP}
-        
-  lte_rtpengine:
-    build: ./dockers/rtpengine
-    image: lte_rtpengine
-    container_name: lte_rtpengine
-    dns: ${LTE_DNS_IP}
-    depends_on:
-      - lte_dns
-      - lte_mysql
-    env_file:
-      - .env
-    volumes:
-      - ./log/rtpengine:/opt/LTE/log/rtpengine
-      - ./config/rtpengine:/opt/LTE/config/rtpengine
-      - ./scripts/rtpengine:/opt/LTE/scripts/rtpengine
-      - ./scripts/common:/opt/LTE/scripts/common
-    networks:
-      core:
-        ipv4_address: ${LTE_RTPENGINE_IP}
+
+#  lte_icscf:
+#    build: ./dockers/icscf
+#    image: lte_icscf
+#    container_name: lte_icscf
+#    dns: ${LTE_DNS_IP}
+#    depends_on:
+#      - lte_dns
+#      - lte_mysql
+#      - lte_hss_ims
+#    env_file:
+#      - .env
+#    volumes:
+#      - ./log/icscf:/opt/LTE/log/icscf
+#      - ./config/icscf:/opt/LTE/config/icscf
+#      - ./scripts/icscf:/opt/LTE/scripts/icscf
+#      - ./scripts/common:/opt/LTE/scripts/common
+#    networks:
+#      core:
+#        ipv4_address: ${LTE_ICSCF_IP}
+#
+#  lte_pcscf:
+#    build: ./dockers/pcscf
+#    image: lte_pcscf
+#    container_name: lte_pcscf
+#    dns: ${LTE_DNS_IP}
+#    depends_on:
+#      - lte_dns
+#      - lte_mysql
+#      - lte_hss_ims
+#      - lte_pcrf
+#    env_file:
+#      - .env
+#    volumes:
+#      - ./log/pcscf:/opt/LTE/log/pcscf
+#      - ./config/pcscf:/opt/LTE/config/pcscf
+#      - ./scripts/pcscf:/opt/LTE/scripts/pcscf
+#      - ./scripts/common:/opt/LTE/scripts/common
+#    networks:
+#      core:
+#        ipv4_address: ${LTE_PCSCF_IP}
+#
+#  lte_scscf:
+#    build: ./dockers/scscf
+#    image: lte_scscf
+#    container_name: lte_scscf
+#    dns: ${LTE_DNS_IP}
+#    depends_on:
+#      - lte_dns
+#      - lte_mysql
+#      - lte_hss_ims
+#    env_file:
+#      - .env
+#    volumes:
+#      - ./log/scscf:/opt/LTE/log/scscf
+#      - ./config/scscf:/opt/LTE/config/scscf
+#      - ./scripts/scscf:/opt/LTE/scripts/scscf
+#      - ./scripts/common:/opt/LTE/scripts/common
+#    networks:
+#      core:
+#        ipv4_address: ${LTE_SCSCF_IP}
+#
+#  lte_hss_ims:
+#    build: ./dockers/hss_ims
+#    image: lte_hss_ims
+#    container_name: lte_hss_ims
+#    dns: ${LTE_DNS_IP}
+#    depends_on:
+#      - lte_dns
+#      - lte_mysql
+#    env_file:
+#      - .env
+#    volumes:
+#      - ./log/hss_ims:/opt/LTE/log/hss_ims
+#      - ./config/hss_ims:/opt/LTE/config/hss_ims
+#      - ./scripts/hss_ims:/opt/LTE/scripts/hss_ims
+#      - ./scripts/common:/opt/LTE/scripts/common
+#    networks:
+#      core:
+#        ipv4_address: ${LTE_HSS_IMS_IP}
+#
+#  lte_rtpengine:
+#    build: ./dockers/rtpengine
+#    image: lte_rtpengine
+#    container_name: lte_rtpengine
+#    dns: ${LTE_DNS_IP}
+#    depends_on:
+#      - lte_dns
+#      - lte_mysql
+#    env_file:
+#      - .env
+#    volumes:
+#      - ./log/rtpengine:/opt/LTE/log/rtpengine
+#      - ./config/rtpengine:/opt/LTE/config/rtpengine
+#      - ./scripts/rtpengine:/opt/LTE/scripts/rtpengine
+#      - ./scripts/common:/opt/LTE/scripts/common
+#    networks:
+#      core:
+#        ipv4_address: ${LTE_RTPENGINE_IP}
 
   lte_enb_zmq:
     build: ./dockers/enb_zmq
@@ -564,7 +564,7 @@ services:
         ipv4_address: ${LTE_ENB_ZMQ_IP}
       radio_zmq:
         ipv4_address: ${LTE_RZMQ_ENB_IP}
-        
+
   lte_enb_radio:
     privileged: true
     build: ./dockers/enb_radio
@@ -589,7 +589,7 @@ services:
         ipv4_address: ${LTE_ENB_ZMQ_IP}
       radio_zmq:
         ipv4_address: ${LTE_RZMQ_ENB_IP}
-                
+
   lte_ue_zmq:
     build: ./dockers/ue_zmq
     image: lte_ue_zmq
@@ -615,7 +615,7 @@ services:
     networks:
       radio_zmq:
         ipv4_address: ${LTE_RZMQ_UE_IP}
-        
+
   lte_nr_gnb:
     build: ./dockers/nr_gnb
     image: lte_nr_gnb
@@ -672,7 +672,7 @@ networks:
     ipam:
       config:
         - subnet: ${LTE_RZMQ_SUBNET}
-       
+
   core:
     ipam:
       config:

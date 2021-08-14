@@ -10,8 +10,6 @@ ARG OPEN5GS_CLONE_URL=https://github.com/open5gs/open5gs
 ARG OPEN5GS_PREFIX=${LTE_BASE_DIR}/open5gs/
 ARG OPEN5GS_VERSION=v2.3.2
 
-ARG MAKE_ARGS="-j2"
-
 RUN apt-get update && apt-get install -y --no-install-recommends ${OPEN5GS_BUILD_DEPS} ${OPEN5GS_RUN_DEPS} \
 	&& git clone ${OPEN5GS_CLONE_URL} \
 	&& cd ${OPEN5GS_SRC_DIR} \
@@ -27,4 +25,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends ${OPEN5GS_BUILD
 	&& rm -rf ${OPEN5GS_SRC_DIR} \
 	&& apt-get purge -y ${OPEN5GS_BUILD_DEPS} && apt-get clean autoclean && apt-get autoremove --yes \
 	&& rm -rf /var/lib/apt/lists/*
-	
