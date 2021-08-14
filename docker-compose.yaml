@@ -178,10 +178,50 @@ services:
       core:
         ipv4_address: ${LTE_NRF_IP}
         
-  lte_udm:
-    build: ./dockers/udm
-    image: lte_udm
-    container_name: lte_udm
+  lte_nssf:
+    build: ./dockers/nssf
+    image: lte_nssf
+    container_name: lte_nssf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/nssf:/opt/LTE/log/nssf
+      - ./config/nssf:/opt/LTE/config/nssf
+      - ./scripts/nssf:/opt/LTE/scripts/nssf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_NSSF_IP}
+        
+  lte_bsf:
+    build: ./dockers/bsf
+    image: lte_bsf
+    container_name: lte_bsf
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/bsf:/opt/LTE/log/bsf
+      - ./config/bsf:/opt/LTE/config/bsf
+      - ./scripts/bsf:/opt/LTE/scripts/bsf
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_BSF_IP}
+        
+  lte_pcf:
+    build: ./dockers/pcf
+    image: lte_pcf
+    container_name: lte_pcf
     dns: ${LTE_DNS_IP}
     depends_on:
       - lte_dns
@@ -191,13 +231,13 @@ services:
     env_file:
       - .env
     volumes:
-      - ./log/udm:/opt/LTE/log/udm
-      - ./config/udm:/opt/LTE/config/udm
-      - ./scripts/udm:/opt/LTE/scripts/udm
+      - ./log/pcf:/opt/LTE/log/pcf
+      - ./config/pcf:/opt/LTE/config/pcf
+      - ./scripts/pcf:/opt/LTE/scripts/pcf
       - ./scripts/common:/opt/LTE/scripts/common
     networks:
       core:
-        ipv4_address: ${LTE_UDM_IP}
+        ipv4_address: ${LTE_PCF_IP}
         
   lte_udr:
     build: ./dockers/udr
@@ -220,6 +260,28 @@ services:
     networks:
       core:
         ipv4_address: ${LTE_UDR_IP}
+        
+  lte_udm:
+    build: ./dockers/udm
+    image: lte_udm
+    container_name: lte_udm
+    dns: ${LTE_DNS_IP}
+    depends_on:
+      - lte_dns
+      - lte_mongo
+      - lte_nrf
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    env_file:
+      - .env
+    volumes:
+      - ./log/udm:/opt/LTE/log/udm
+      - ./config/udm:/opt/LTE/config/udm
+      - ./scripts/udm:/opt/LTE/scripts/udm
+      - ./scripts/common:/opt/LTE/scripts/common
+    networks:
+      core:
+        ipv4_address: ${LTE_UDM_IP}
         
   lte_hss_epc:
     build: ./dockers/hss_epc

@@ -29,11 +29,15 @@ address=/udm.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_UDM_IP
 address=/udr.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_UDR_IP
 address=/smf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_SMF_IP
 address=/upf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_UPF_IP
+address=/bsf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_BSF_IP
+address=/nssf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_NSSF_IP
+address=/pcf.5g.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org/LTE_PCF_IP
 
 interface=eth0
 no-hosts
 expand-hosts
 domain=mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org
+log-queries
 
 srv-host=_sip._udp.pcscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,pcscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,5060
 srv-host=_sip._tcp.pcscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,pcscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,5060
@@ -41,6 +45,3 @@ srv-host=_sip._udp.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,icscf.ims.mncLTE_
 srv-host=_sip._tcp.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,icscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,4060
 srv-host=_sip._udp.scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,6060
 srv-host=_sip._tcp.scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,scscf.ims.mncLTE_MNC3.mccLTE_MCC3.3gppnetwork.org,6060
-
-
-

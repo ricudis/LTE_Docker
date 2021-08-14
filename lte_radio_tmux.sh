@@ -1,10 +1,5 @@
 #!/bin/sh
 
-docker-compose down
-docker container prune -f
-docker network prune -f
-docker image prune -f
-
 session="lte"
 # set up tmux
 tmux start-server
