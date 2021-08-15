@@ -23,24 +23,24 @@ use to attach commercial UEs to EPC.
 
 
 Prerequisites:
- * ubuntu 20.04
+ * ubuntu 21.04
  * docker
  * docker-compose
- * 4G RAM (probably less to actually run, building some ASN sources requires a lot of RAM)
+ * 8-16G RAM (probably less to actually run, building some ASN sources requires a lot of RAM)
  * 32G disk space
-
 
 You'll need a fairly recent kernel version, because of SCTP
 incompatibilities with docker.
 
 Ubuntu 20.04 works out of the box.
 
-A vagrant file is also provided
+A vagrant file is also provided based on 21.04
 
 How to build:
  * Install ubuntu
  * Install docker
  * Install docker-compose
+ * Alternatively, just vagrant up the provided vagrantfile, based on 21.04, it sets up its environment automatically, and you can enable full package compilation at provisioning time
 
 Build and run
 
@@ -74,7 +74,7 @@ lte_ue_zmq docker instance. Try:
 
 ```ping 10.45.0.1``` (the PGW gateway IP)
 ```ping 8.8.8.8``` (an outside IP, to test if NAT works right)
-
+ 
 NOTE : The raspberry PI version is build from a separate tree of srsLTE, not
 yet merged to mainline. Apparently the changes required for performance
 cause the ZMQ versions of UE/ENB to have quite long delays on initial
@@ -93,13 +93,13 @@ Wait for elements to start, then do
 sh lte_5g_ran_ueransim.sh
 ```
 
-
 How to capture traffic :
 
 You can capture pcaps of any network element either by attaching to the
 specific docker containeer ("docker-compose exec lte_xxx /bin/bash") and
 running tcpdump, or (better) by running tcpdump on the appropriate network
-interface docker generates on the host.
+interface docker generates on the host. The provided tcpdump.sh does that for you
+and stores pcaps in log/tcpdump/
 
 
 How to run the RADIO version:
