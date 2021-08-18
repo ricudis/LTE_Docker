@@ -2,7 +2,7 @@
 
 docker-compose up lte_dns &
 
-wait 5
+sleep 5
 
 eval `grep LTE_DOCKER_GW_IP ./environment`
 export TCPDUMP_INTERFACE=`ip -o addr | grep ${LTE_DOCKER_GW_IP} | tr -s " "  | cut -f2 -d" "`
